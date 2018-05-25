@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
+	<title>terserah</title>
+	<style type="text/css">
+		#kotak{
+			width: 30%;
+			float: left;
+		}
+		#hasilajah{
+			width: 60%;
+			float: right;
+			visibility: visible;
+		}
+		#a{
+			height: 100px;
+		}
+		#jk{
+			height: 100px;
+		}
+	</style>
+</head>
+<body>
+<fieldset id="kotak">
+<form method="post" name="frm_ajax">
+<div id="pesan_kirim" style="display:none"></div>
+Nama<br/><input type="text" id="txt_nama"/>
+<h4>Pilih jenis kelamin anda</h4><input type="radio" name="kelamin" value="laki">lanang<br/>
+<input type="radio" name="kelamin" value="perempuan">wadon<br/>
+<br/>
+<br/>
+<br/>
+<h4>pilih warna kesukaan anda</h4>
+<input type="checkbox" name="warna" value="merah" id="warna1">merah<br/>
+<input type="checkbox" name="warna" value="jingga" id="warna1">jingga<br/>
+<input type="checkbox" name="warna" value="kuning" id="warna1">kuning<br/>
+<input type="checkbox" name="warna" value="hijau" id="warna1">hijau<br/>
+<input type="checkbox" name="warna" value="biru" id="warna1">biru<br/>
+<input type="checkbox" name="warna" value="ungu" id="warna1">ungu<br/>
+<br/>
+<br/>
+<h4>Pilih golongan darah anda</h4><select name="gol" id="gol">
+	<option value="a">a</option>
+	<option value="b">b</option>
+	<option value="ab">ab</option>
+	<option value="o">b</option>
+</select>
+<br/>
+<br/>
+<h4>Masukan komentar anda</h4><textarea name="memo" Rows=10 Cols=50 id="txt">silahkan isi komentar anda disini</textarea>
+<input type="button" onclick="kirim_form();" value="Kirim"/>
+</form>
+</fieldset>
+<script type="text/javascript">
+	function kirim_form(){
+		$('#pesan_kirim').html('Loading .....');
+		$('#pesan_kirim').slideDown('slow');
+
+		var nama   = $('#txt_nama').val();
+		var gol = $('#gol').val();
+		var txt = $('#txt').val();
+		var klmn = $('input[name=kelamin]:checked').val();
+		var wrna =$('input[name=warna]:checked').map(function(){ return $(this).val(); }).get();
+		$.ajax({
+			url  : 'http://localhost/ajaxdata/proses.php',
+			type : 'POST',
+			dataType : 'html',
+			data : 'nama='+nama+'&gol='+gol+'&txt'+txt+'&klmn'+klmn+'&wrna'+wrna,
+			succsess : function(respons){
+				$('#pesan_kirim').html(respons);
+			}, 
+		})
+	}
+</script>
+</body>
+</html>
